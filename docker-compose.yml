@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    networks:
+      - hw7-network
+    ports:
+      - "80:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+      - GF_DASHBOARD_DEFAULT_HOME_DASHBOARD_PATH=${GF_DASHBOARD_DEFAULT_HOME_DASHBOARD_PATH}
+      - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL}
+    depends_on:
+      - hw7-loki
+
+  hw7-loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    networks:
+      - hw7-network
+
+  fluentd-loki:
+    build:
+      context: ./fluentd-loki
+      dockerfile: Dockerfile
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    volumes:
+      - ./fluentd-loki/fluentd.conf:/fluentd/etc/fluent.conf:ro
+    networks:
+      - hw7-network
+    depends_on: 
+      - hw7-loki
+
+  log_container_fluentd-1:
+    image: busybox
+    command: "sh -c 'while true; do echo \"Busybox1 test log every 2 seconds: $(date)\"; sleep 2; done'"
+    networks:
+      - hw7-network
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: log_container_fluentd.logs
+    depends_on:
+      - fluentd-loki
+
+  log_container_fluentd-2:
+    image: busybox
+    command: "sh -c 'while true; do echo \"Busybox2 test log every 4 seconds: $(date)\"; sleep 4; done'"
+    networks:
+      - hw7-network
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: log_container_fluentd.logs
+    depends_on:
+      - fluentd-loki
+
+networks:
+    hw7-network:
+      driver: bridge
