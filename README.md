@@ -49,15 +49,14 @@
    ```
 
    **Результат:**:
-   ```
+```
 NAME                                           IMAGE                             COMMAND                  SERVICE                   CREATED          STATUS          PORTS
 hw7-docker-compose-fluentd-loki-1              hw7-docker-compose-fluentd-loki   "tini -- /bin/entryp…"   fluentd-loki              35 minutes ago   Up 35 minutes   5140/tcp, 0.0.0.0:24224->24224/tcp, 0.0.0.0:24224->24224/udp, :::24224->24224/tcp, :::24224->24224/udp
 hw7-docker-compose-grafana-1                   grafana/grafana                   "/run.sh"                grafana                   35 minutes ago   Up 35 minutes   0.0.0.0:80->3000/tcp, [::]:80->3000/tcp
 hw7-docker-compose-hw7-loki-1                  grafana/loki:latest               "/usr/bin/loki -conf…"   hw7-loki                  35 minutes ago   Up 35 minutes   0.0.0.0:3100->3100/tcp, :::3100->3100/tcp
 hw7-docker-compose-log_container_fluentd-1-1   busybox                           "sh -c 'while true; …"   log_container_fluentd-1   35 minutes ago   Up 35 minutes   
 hw7-docker-compose-log_container_fluentd-2-1   busybox                           "sh -c 'while true; …"   log_container_fluentd-2   35 minutes ago   Up 35 minutes   
-
-   ```
+```
 
 ## Доступ до графани 
 - **За допомогою інтерфейсу NAT мережі**: `http://localhost/`
