@@ -49,7 +49,7 @@
    ```
 
    **Результат:**:
-   ```sh
+   ```
    NAME                                           IMAGE                             COMMAND                  SERVICE                   CREATED          STATUS          PORTS
 hw7-docker-compose-fluentd-loki-1              hw7-docker-compose-fluentd-loki   "tini -- /bin/entryp…"   fluentd-loki              15 minutes ago   Up 15 minutes   5140/tcp, 0.0.0.0:24224->24224/tcp, 0.0.0.0:24224->24224/udp, :::24224->24224/tcp, :::24224->24224/udp
 hw7-docker-compose-grafana-1                   grafana/grafana                   "/run.sh"                grafana                   15 minutes ago   Up 15 minutes   0.0.0.0:80->3000/tcp, [::]:80->3000/tcp
